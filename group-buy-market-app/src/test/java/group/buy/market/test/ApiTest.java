@@ -1,4 +1,4 @@
-package group.buy.market.app.test;
+package group.buy.market.test;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;

@@ -22,7 +22,7 @@ public class MarketProductEntity {
     /**
      * 商品 Id
      */
-    private String goodId;
+    private String goodsId;
 
     /**
      * 来源

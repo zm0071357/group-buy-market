@@ -127,7 +127,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>cn.bugstack.group.buy.market.app.config.Application</mainClass>
+                    <mainClass>group.buy.market.app.Application</mainClass>
                     <layout>JAR</layout>
                 </configuration>
             </plugin>

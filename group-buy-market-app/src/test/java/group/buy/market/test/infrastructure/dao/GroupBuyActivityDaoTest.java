@@ -1,4 +1,4 @@
-package group.buy.market.app.test.infrastructure.dao;
+package group.buy.market.test.infrastructure.dao;
 
 import com.alibaba.fastjson.JSON;
 import group.buy.market.infrastructure.dao.GroupBuyActivityDao;

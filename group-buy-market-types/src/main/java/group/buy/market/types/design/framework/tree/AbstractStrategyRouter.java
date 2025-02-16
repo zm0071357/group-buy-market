@@ -1,6 +1,5 @@
 package group.buy.market.types.design.framework.tree;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
