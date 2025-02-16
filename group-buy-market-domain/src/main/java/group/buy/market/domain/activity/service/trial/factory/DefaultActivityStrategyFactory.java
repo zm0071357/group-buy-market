@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 /**
  * 活动策略工厂
  * 初始化根节点（串联整个链路）、定义上下文信息
@@ -41,6 +43,7 @@ public class DefaultActivityStrategyFactory {
     public static class DynamicContext {
         private GroupBuyActivityDiscountVO groupBuyActivityDiscountVO;
         private SkuVO skuVO;
+        private BigDecimal deductPrice;
     }
 
 }
