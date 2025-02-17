@@ -2,6 +2,7 @@ package group.buy.market.domain.activity.service.trial.thread;
 
 import group.buy.market.domain.activity.adapter.repository.ActivityRepository;
 import group.buy.market.domain.activity.model.valobj.GroupBuyActivityDiscountVO;
+import group.buy.market.domain.activity.model.valobj.SCSkuActivityVO;
 
 import java.util.concurrent.Callable;
 
@@ -14,16 +15,25 @@ public class QueryGroupBuyActivityDiscountVOThreadTask implements Callable<Group
 
     private final String channel;
 
+    private final String goodId;
+
     private final ActivityRepository activityRepository;
 
-    public QueryGroupBuyActivityDiscountVOThreadTask(String source, String channel, ActivityRepository activityRepository) {
+    public QueryGroupBuyActivityDiscountVOThreadTask(String source, String channel, String goodId, ActivityRepository activityRepository) {
         this.source = source;
         this.channel = channel;
+        this.goodId = goodId;
         this.activityRepository = activityRepository;
     }
 
     @Override
     public GroupBuyActivityDiscountVO call() throws Exception {
-        return activityRepository.queryGroupBuyActivityDiscountVO(source, channel);
+
+        SCSkuActivityVO scSkuActivityVO = activityRepository.querySCSkuActivityBySCGoodsId(source, channel, goodId);
+        if (scSkuActivityVO == null) {
+            return null;
+        }
+
+        return activityRepository.queryGroupBuyActivityDiscountVO(scSkuActivityVO.getActivityId());
     }
 }

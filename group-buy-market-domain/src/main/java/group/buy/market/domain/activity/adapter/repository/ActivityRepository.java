@@ -1,6 +1,7 @@
 package group.buy.market.domain.activity.adapter.repository;
 
 import group.buy.market.domain.activity.model.valobj.GroupBuyActivityDiscountVO;
+import group.buy.market.domain.activity.model.valobj.SCSkuActivityVO;
 import group.buy.market.domain.activity.model.valobj.SkuVO;
 
 /**
@@ -11,16 +12,25 @@ public interface ActivityRepository {
 
     /**
      * 查询拼团活动及拼团配置
-     * @param source
-     * @param channel
+     * @param activityId 拼团活动ID
      * @return
      */
-    GroupBuyActivityDiscountVO queryGroupBuyActivityDiscountVO(String source, String channel);
+    GroupBuyActivityDiscountVO queryGroupBuyActivityDiscountVO(Long activityId);
 
     /**
      * 查询商品
-     * @param goodsId
+     * @param goodsId 商品ID
      * @return
      */
     SkuVO querySkuByGoodsId(String goodsId);
+
+
+    /**
+     * 查询商品活动配置关联
+     * @param source 渠道
+     * @param channel 来源
+     * @param goodsId 商品ID
+     * @return
+     */
+    SCSkuActivityVO querySCSkuActivityBySCGoodsId(String source, String channel, String goodsId);
 }
