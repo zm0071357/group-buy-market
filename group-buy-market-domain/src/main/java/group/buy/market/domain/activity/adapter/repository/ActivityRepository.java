@@ -33,4 +33,16 @@ public interface ActivityRepository {
      * @return
      */
     SCSkuActivityVO querySCSkuActivityBySCGoodsId(String source, String channel, String goodsId);
+
+    /**
+     * 判断服务是否降级
+     * @return
+     */
+    boolean downgradeSwitch();
+
+    /**
+     * 判断用户ID是否在切量范围内
+     * @return
+     */
+    boolean cutRange(String userId);
 }
