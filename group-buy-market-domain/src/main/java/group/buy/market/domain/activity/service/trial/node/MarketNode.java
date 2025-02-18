@@ -38,6 +38,9 @@ public class MarketNode extends AbstractGroupBuyMarketSupport<MarketProductEntit
     private ErrorNode errorNode;
 
     @Resource
+    private TagNode tagNode;
+
+    @Resource
     private Map<String, DiscountCalculateService> discountCalculateServiceMap;
 
     /**
@@ -108,6 +111,6 @@ public class MarketNode extends AbstractGroupBuyMarketSupport<MarketProductEntit
                 dynamicContext.getDeductPrice() == null) {
             return errorNode;
         }
-        return endNode;
+        return tagNode;
     }
 }

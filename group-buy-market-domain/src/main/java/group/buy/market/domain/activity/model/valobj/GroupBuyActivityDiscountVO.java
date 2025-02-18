@@ -1,9 +1,11 @@
 package group.buy.market.domain.activity.model.valobj;
 
+import group.buy.market.types.common.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
 
@@ -92,6 +94,33 @@ public class GroupBuyActivityDiscountVO {
      * 人群标签规则范围
      */
     private String tagScope;
+
+    // 活动是否可见
+    // 配置为1 不可见
+    public boolean isVisible() {
+        // 没有配置 可见
+        if (StringUtils.isBlank(this.tagScope)) {
+            return TagScopeEnum.VISIBLE.getAllow();
+        }
+        String[] split = this.getTagScope().split(Constants.SPLIT);
+        if (split.length > 0 && split[0].equals("1")) {
+            return TagScopeEnum.VISIBLE.getRefuse();
+        }
+        return TagScopeEnum.VISIBLE.getAllow();
+    }
+
+    // 活动是否可参与
+    // 配置为2 不可参与
+    public boolean isEnable() {
+        if (StringUtils.isBlank(this.tagScope)) {
+            return TagScopeEnum.ENABLE.getAllow();
+        }
+        String[] split = this.getTagScope().split(Constants.SPLIT);
+        if (split.length == 2 && split[1].equals("2")) {
+            return TagScopeEnum.ENABLE.getRefuse();
+        }
+        return TagScopeEnum.ENABLE.getAllow();
+    }
 
     @Getter
     @Builder

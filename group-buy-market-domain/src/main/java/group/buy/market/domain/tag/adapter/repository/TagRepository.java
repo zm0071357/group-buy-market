@@ -28,4 +28,12 @@ public interface TagRepository {
      * @param size 统计量
      */
     void updateCrowdTagsStatistics(String tagId, int size);
+
+    /**
+     * 判断用户是否在人群标签范围内
+     * @param tagId 人群标签ID
+     * @param userId 用户ID
+     * @return
+     */
+    boolean isTagCrowRange(String tagId, String userId);
 }

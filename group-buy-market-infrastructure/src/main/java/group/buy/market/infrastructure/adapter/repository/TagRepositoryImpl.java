@@ -71,4 +71,13 @@ public class TagRepositoryImpl implements TagRepository {
         crowdTagsDao.updateCrowdTagsStatistics(crowdTagsReq);
     }
 
+    @Override
+    public boolean isTagCrowRange(String tagId, String userId) {
+        RBitSet bitSet = redisService.getBitSet(tagId);
+        if (!bitSet.isExists()) {
+            return true;
+        }
+        return bitSet.get(redisService.getIndexFromUserId(userId));
+    }
+
 }
