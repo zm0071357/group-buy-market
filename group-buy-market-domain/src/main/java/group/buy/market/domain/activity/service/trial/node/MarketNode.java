@@ -92,9 +92,10 @@ public class MarketNode extends AbstractGroupBuyMarketSupport<MarketProductEntit
         if (discountCalculateService == null) {
             throw new AppException(ResponseCode.E0001.getCode(), ResponseCode.E0001.getInfo());
         }
-        BigDecimal deductPrice = discountCalculateService.calculate(requestParameter.getUserId(), skuVO.getOriginalPrice(), groupBuyDiscount);
+        BigDecimal payPrice = discountCalculateService.calculate(requestParameter.getUserId(), skuVO.getOriginalPrice(), groupBuyDiscount);
         // 写入上下文
-        dynamicContext.setDeductPrice(deductPrice);
+        dynamicContext.setDeductPrice(skuVO.getOriginalPrice().subtract(payPrice));
+        dynamicContext.setPayPrice(payPrice);
         return router(requestParameter, dynamicContext);
     }
 

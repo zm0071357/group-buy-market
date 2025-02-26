@@ -30,6 +30,6 @@ public interface TradeService {
      * @param payDiscountEntity 拼团支付优惠实体对象
      * @return
      */
-    MarketPayOrderEntity lockMarketPayOrder(UserEntity userEntity, PayActivityEntity payActivityEntity, PayDiscountEntity payDiscountEntity);
+    MarketPayOrderEntity lockMarketPayOrder(UserEntity userEntity, PayActivityEntity payActivityEntity, PayDiscountEntity payDiscountEntity) throws Exception;
 
 }

@@ -19,4 +19,10 @@ public interface GroupBuyOrderListDao {
      */
     GroupBuyOrderList queryGroupBuyOrderRecordByOutTradeNo(GroupBuyOrderList groupBuyOrderReq);
 
+    /**
+     * 查询用户参与拼团活动次数
+     * @param groupBuyOrderListReq 用户拼单信息
+     * @return
+     */
+    Integer queryOrderCount(GroupBuyOrderList groupBuyOrderListReq);
 }

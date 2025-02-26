@@ -22,9 +22,16 @@ public interface GroupBuyActivityDao {
     GroupBuyActivity queryValidGroupBuyActivity(GroupBuyActivity groupBuyActivityReq);
 
     /**
-     * 根据拼团活动ID查询拼团活动信息
+     * 查询拼团活动信息
      * @param activityId
      * @return
      */
     GroupBuyActivity queryValidGroupBuyActivityId(Long activityId);
+
+    /**
+     * 查询拼团活动信息
+     * @param activityId
+     * @return
+     */
+    GroupBuyActivity queryGroupBuyActivityByActivityId(Long activityId);
 }

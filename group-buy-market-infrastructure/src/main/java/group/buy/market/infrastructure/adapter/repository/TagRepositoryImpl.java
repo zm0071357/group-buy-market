@@ -9,6 +9,7 @@ import group.buy.market.infrastructure.dao.po.CrowdTags;
 import group.buy.market.infrastructure.dao.po.CrowdTagsDetail;
 import group.buy.market.infrastructure.dao.po.CrowdTagsJob;
 import group.buy.market.infrastructure.redis.RedisService;
+import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBitSet;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.Resource;
 
 @Repository
+@Slf4j
 public class TagRepositoryImpl implements TagRepository {
 
     @Resource
@@ -55,10 +57,12 @@ public class TagRepositoryImpl implements TagRepository {
 
         try {
             crowdTagsDetailDao.addCrowdTagsUserId(crowdTagsDetailReq);
+            // 写入缓存
+            log.info("将userId为:{}写入tagId为：{} BitSet缓存", userId, tagId);
             RBitSet bitSet = redisService.getBitSet(tagId);
             bitSet.set(redisService.getIndexFromUserId(userId), true);
         } catch (DuplicateKeyException ignore) {
-
+            log.info("...");
         }
 
     }

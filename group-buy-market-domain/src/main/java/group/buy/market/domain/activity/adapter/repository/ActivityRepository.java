@@ -45,4 +45,12 @@ public interface ActivityRepository {
      * @return
      */
     boolean cutRange(String userId);
+
+    /**
+     * 判断用户是否在人群标签范围内
+     * @param userId 用户ID
+     * @param tagId 标签ID
+     * @return
+     */
+    boolean isTagCrowdRange(String userId, String tagId);
 }

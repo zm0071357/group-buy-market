@@ -26,8 +26,9 @@ public class TagServiceImpl implements TagService {
 
         // 数据写入记录
         List<String> userIdList = new ArrayList<String>() {{
-            add("xiaofuge");
-            add("LZM");
+            add("xfg01");
+            add("xfg02");
+            add("xfg03");
         }};
 
         // 写入数据库

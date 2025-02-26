@@ -1,6 +1,7 @@
 package group.buy.market.domain.trade.adapter.repository;
 
 import group.buy.market.domain.trade.model.aggregate.GroupBuyOrderAggregate;
+import group.buy.market.domain.trade.model.entity.GroupBuyActivityEntity;
 import group.buy.market.domain.trade.model.entity.MarketPayOrderEntity;
 import group.buy.market.domain.trade.model.valobj.GroupBuyProgressVO;
 
@@ -30,4 +31,18 @@ public interface TradeRepository {
      * @return
      */
     MarketPayOrderEntity lockMarketPayOrder(GroupBuyOrderAggregate groupBuyOrderAggregate);
+
+    /**
+     * 查询活动信息
+     * @param activityId 活动ID
+     * @return
+     */
+    GroupBuyActivityEntity queryGroupBuyActivityByActivityId(Long activityId);
+
+    /**
+     * 查询用户参加拼团活动次数
+     * @param activityId 活动ID
+     * @param userId 用户ID
+     */
+    Integer queryOrderCount(Long activityId, String userId);
 }
