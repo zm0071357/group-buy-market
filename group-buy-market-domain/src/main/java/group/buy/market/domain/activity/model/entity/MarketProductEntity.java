@@ -15,12 +15,17 @@ import lombok.NoArgsConstructor;
 public class MarketProductEntity {
 
     /**
-     * 用户 Id
+     * 活动ID
+     */
+    private Long activityId;
+
+    /**
+     * 用户ID
      */
     private String userId;
 
     /**
-     * 商品 Id
+     * 商品ID
      */
     private String goodsId;
 
