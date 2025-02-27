@@ -3,6 +3,8 @@ package group.buy.market.infrastructure.dao;
 import group.buy.market.infrastructure.dao.po.GroupBuyOrderList;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface GroupBuyOrderListDao {
 
@@ -25,4 +27,18 @@ public interface GroupBuyOrderListDao {
      * @return
      */
     Integer queryOrderCount(GroupBuyOrderList groupBuyOrderListReq);
+
+    /**
+     * 更新订单状态
+     * @param groupBuyOrderListReq
+     * @return
+     */
+    int updateOrderStatusComplete(GroupBuyOrderList groupBuyOrderListReq);
+
+    /**
+     * 获取已完成拼团目标的订单号集合
+     * @param teamId
+     * @return
+     */
+    List<String> queryGroupBuyCompleteOrderOutTradeNoListByTeamId(String teamId);
 }

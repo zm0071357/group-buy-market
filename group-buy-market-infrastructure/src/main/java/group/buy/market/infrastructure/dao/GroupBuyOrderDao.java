@@ -34,4 +34,23 @@ public interface GroupBuyOrderDao {
      */
     GroupBuyOrder queryGroupBuyProgress(String teamId);
 
+    /**
+     * 查询拼团组队信息
+     * @param teamId 拼团ID
+     */
+    GroupBuyOrder queryGroupBuyTeamByTeamId(String teamId);
+
+    /**
+     * 拼团进度 +1
+     * @param teamId
+     * @return
+     */
+    int updateAddCompleteCount(String teamId);
+
+    /**
+     * 拼团目标完成
+     * @param teamId
+     * @return
+     */
+    int updateTeamComplete(String teamId);
 }

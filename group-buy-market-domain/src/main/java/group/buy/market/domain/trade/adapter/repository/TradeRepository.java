@@ -1,7 +1,9 @@
 package group.buy.market.domain.trade.adapter.repository;
 
 import group.buy.market.domain.trade.model.aggregate.GroupBuyOrderAggregate;
+import group.buy.market.domain.trade.model.aggregate.GroupBuyTeamAggregate;
 import group.buy.market.domain.trade.model.entity.GroupBuyActivityEntity;
+import group.buy.market.domain.trade.model.entity.GroupBuyTeamEntity;
 import group.buy.market.domain.trade.model.entity.MarketPayOrderEntity;
 import group.buy.market.domain.trade.model.valobj.GroupBuyProgressVO;
 
@@ -45,4 +47,17 @@ public interface TradeRepository {
      * @param userId 用户ID
      */
     Integer queryOrderCount(Long activityId, String userId);
+
+    /**
+     * 查询拼团组队信息
+     * @param teamId 组队ID
+     * @return
+     */
+    GroupBuyTeamEntity queryGroupBuyTeamByTeamId(String teamId);
+
+    /**
+     * 处理拼团结算
+     * @param groupBuyTeamAggregate 拼团组队结算聚合对象
+     */
+    void settlementMarketPayOrder(GroupBuyTeamAggregate groupBuyTeamAggregate);
 }

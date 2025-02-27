@@ -1,4 +1,4 @@
-package group.buy.market.domain.trade.service;
+package group.buy.market.domain.trade.service.lock;
 
 import group.buy.market.domain.trade.model.entity.MarketPayOrderEntity;
 import group.buy.market.domain.trade.model.entity.PayActivityEntity;
@@ -6,7 +6,10 @@ import group.buy.market.domain.trade.model.entity.PayDiscountEntity;
 import group.buy.market.domain.trade.model.entity.UserEntity;
 import group.buy.market.domain.trade.model.valobj.GroupBuyProgressVO;
 
-public interface TradeService {
+/**
+ * 拼团交易锁单
+ */
+public interface TradeLockOrderService {
 
     /**
      * 查询未支付订单

@@ -14,7 +14,7 @@ import group.buy.market.domain.trade.model.entity.PayActivityEntity;
 import group.buy.market.domain.trade.model.entity.PayDiscountEntity;
 import group.buy.market.domain.trade.model.entity.UserEntity;
 import group.buy.market.domain.trade.model.valobj.GroupBuyProgressVO;
-import group.buy.market.domain.trade.service.TradeService;
+import group.buy.market.domain.trade.service.lock.TradeLockOrderService;
 import group.buy.market.types.enums.ResponseCode;
 import group.buy.market.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,7 @@ public class MarketTradeController implements MarketTradeService {
     private IndexGroupBuyMarketService indexGroupBuyMarketService;
 
     @Resource
-    private TradeService tradeService;
+    private TradeLockOrderService tradeLockOrderService;
 
     @PostMapping("/lock_market_pay_order")
     @Override
@@ -57,7 +57,7 @@ public class MarketTradeController implements MarketTradeService {
             }
 
             // 查询是否已经存在交易记录
-            MarketPayOrderEntity marketPayOrderEntity = tradeService.queryNoPayMarketPayOrderByOutTradeNo(userId, outTradeNo);
+            MarketPayOrderEntity marketPayOrderEntity = tradeLockOrderService.queryNoPayMarketPayOrderByOutTradeNo(userId, outTradeNo);
             if (marketPayOrderEntity != null) {
                 LockMarketPayOrderResponseDTO lockMarketPayOrderResponseDTO = LockMarketPayOrderResponseDTO.builder()
                         .orderId(marketPayOrderEntity.getOrderId())
@@ -75,7 +75,7 @@ public class MarketTradeController implements MarketTradeService {
 
             // 判断拼团锁单是否完成了目标
             if (teamId != null) {
-                    GroupBuyProgressVO groupBuyProgressVO = tradeService.queryGroupBuyProgress(teamId);
+                    GroupBuyProgressVO groupBuyProgressVO = tradeLockOrderService.queryGroupBuyProgress(teamId);
                 if (null != groupBuyProgressVO && Objects.equals(groupBuyProgressVO.getTargetCount(), groupBuyProgressVO.getLockCount())) {
                     log.info("交易锁单拦截-拼单目标已达成:{} {}", userId, teamId);
                     return Response.<LockMarketPayOrderResponseDTO>builder()
@@ -105,7 +105,7 @@ public class MarketTradeController implements MarketTradeService {
             GroupBuyActivityDiscountVO groupBuyActivityDiscountVO = trialBalanceEntity.getGroupBuyActivityDiscountVO();
 
             // 锁单
-            marketPayOrderEntity = tradeService.lockMarketPayOrder(
+            marketPayOrderEntity = tradeLockOrderService.lockMarketPayOrder(
                     UserEntity.builder().userId(userId).build(),
                     PayActivityEntity.builder()
                             .teamId(teamId)

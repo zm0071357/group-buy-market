@@ -18,6 +18,11 @@ import java.math.BigDecimal;
 public class MarketPayOrderEntity {
 
     /**
+     * 拼团组队ID
+     */
+    private String teamId;
+
+    /**
      * 预购订单ID
      */
     private String orderId;
