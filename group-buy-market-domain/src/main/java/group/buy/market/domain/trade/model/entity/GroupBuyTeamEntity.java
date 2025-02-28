@@ -58,7 +58,7 @@ public class GroupBuyTeamEntity {
     private Date validEndTime;
 
     /**
-     *  回调地址
+     * 回调地址
      */
     private String notifyUrl;
 

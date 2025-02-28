@@ -43,5 +43,10 @@ public class LockMarketPayOrderRequestDTO {
      */
     private String outTradeNo;
 
+    /**
+     * 回调地址
+     */
+    private String notifyUrl;
+
 }
 

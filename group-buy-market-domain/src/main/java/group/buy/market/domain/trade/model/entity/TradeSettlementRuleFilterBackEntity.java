@@ -57,4 +57,9 @@ public class TradeSettlementRuleFilterBackEntity {
      */
     private Date validEndTime;
 
+    /**
+     * 回调地址
+     */
+    private String notifyUrl;
+
 }

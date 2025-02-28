@@ -56,5 +56,10 @@ public class PayDiscountEntity {
      */
     private String outTradeNo;
 
+    /**
+     * 回调地址
+     */
+    private String notifyUrl;
+
 }
 

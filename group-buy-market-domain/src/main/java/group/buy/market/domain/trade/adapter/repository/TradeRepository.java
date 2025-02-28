@@ -5,7 +5,10 @@ import group.buy.market.domain.trade.model.aggregate.GroupBuyTeamAggregate;
 import group.buy.market.domain.trade.model.entity.GroupBuyActivityEntity;
 import group.buy.market.domain.trade.model.entity.GroupBuyTeamEntity;
 import group.buy.market.domain.trade.model.entity.MarketPayOrderEntity;
+import group.buy.market.domain.trade.model.entity.NotifyTaskEntity;
 import group.buy.market.domain.trade.model.valobj.GroupBuyProgressVO;
+
+import java.util.List;
 
 /**
  * 拼团交易仓储
@@ -68,4 +71,39 @@ public interface TradeRepository {
      * @return
      */
     boolean isSCBlackIntercept(String source, String channel);
+
+    /**
+     * 查询没有被执行的回调任务集合
+     * @return
+     */
+    List<NotifyTaskEntity> queryUnExecutedNotifyTaskList();
+
+    /**
+     * 查询没有被执行的回调任务集合
+     * @param teamId 拼团ID
+     * @return
+     */
+    List<NotifyTaskEntity> queryUnExecutedNotifyTaskList(String teamId);
+
+
+    /**
+     * 执行回调任务成功
+     * @param teamId 拼团ID
+     * @return
+     */
+    int updateNotifyTaskStatusSuccess(String teamId);
+
+    /**
+     * 执行回调任务失败
+     * @param teamId 拼团ID
+     * @return
+     */
+    int updateNotifyTaskStatusError(String teamId);
+
+    /**
+     * 执行回调任务重试
+     * @param teamId 拼团ID
+     * @return
+     */
+    int updateNotifyTaskStatusRetry(String teamId);
 }
