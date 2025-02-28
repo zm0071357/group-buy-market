@@ -15,6 +15,7 @@ import group.buy.market.infrastructure.dao.po.GroupBuyActivity;
 import group.buy.market.infrastructure.dao.po.GroupBuyOrder;
 import group.buy.market.infrastructure.dao.po.GroupBuyOrderList;
 import group.buy.market.infrastructure.dao.po.NotifyTask;
+import group.buy.market.infrastructure.dcc.DccServiceImpl;
 import group.buy.market.types.common.Constants;
 import group.buy.market.types.enums.ActivityStatusEnumVO;
 import group.buy.market.types.enums.GroupBuyOrderEnumVO;
@@ -28,6 +29,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -46,6 +49,9 @@ public class TradeRepositoryImpl implements TradeRepository {
 
     @Resource
     private NotifyTaskDao notifyTaskDao;
+
+    @Resource
+    private DccServiceImpl dccServiceImpl;
 
     @Override
     public MarketPayOrderEntity queryNoPayMarketPayOrderByOutTradeNo(String userId, String outTradeNo) {
@@ -87,6 +93,13 @@ public class TradeRepositoryImpl implements TradeRepository {
 
         // 拼团不存在 新建一个团
         String teamId = payActivityEntity.getTeamId();
+
+        // 计算有效日期
+        Date currentTime = new Date();
+        Calendar calender = Calendar.getInstance();
+        calender.setTime(currentTime);
+        calender.add(Calendar.MINUTE, payActivityEntity.getValidTime());
+
         if (StringUtils.isBlank(teamId)) {
             teamId = RandomStringUtils.randomNumeric(8);
             // 构建拼团订单
@@ -101,6 +114,8 @@ public class TradeRepositoryImpl implements TradeRepository {
                     .targetCount(payActivityEntity.getTargetCount())
                     .completeCount(0)
                     .lockCount(1)
+                    .validStartTime(currentTime)
+                    .validEndTime(calender.getTime())
                     .build();
             groupBuyOrderDao.insert(groupBuyOrder);
         // 拼团存在
@@ -183,6 +198,8 @@ public class TradeRepositoryImpl implements TradeRepository {
                 .completeCount(groupBuyOrder.getCompleteCount())
                 .lockCount(groupBuyOrder.getLockCount())
                 .status(GroupBuyOrderEnumVO.valueOf(groupBuyOrder.getStatus()))
+                .validStartTime(groupBuyOrder.getValidStartTime())
+                .validEndTime(groupBuyOrder.getValidEndTime())
                 .build();
     }
 
@@ -196,6 +213,7 @@ public class TradeRepositoryImpl implements TradeRepository {
         GroupBuyOrderList groupBuyOrderListReq = new GroupBuyOrderList();
         groupBuyOrderListReq.setUserId(userEntity.getUserId());
         groupBuyOrderListReq.setOutTradeNo(tradePaySuccessEntity.getOutTradeNo());
+        groupBuyOrderListReq.setOutTradeTime(tradePaySuccessEntity.getOutTradeTime());
 
         // 更新订单状态
         int updateOrderListStatusCount = groupBuyOrderListDao.updateOrderStatusComplete(groupBuyOrderListReq);
@@ -233,5 +251,10 @@ public class TradeRepositoryImpl implements TradeRepository {
             notifyTaskDao.insert(notifyTask);
         }
 
+    }
+
+    @Override
+    public boolean isSCBlackIntercept(String source, String channel) {
+        return dccServiceImpl.isScBlackList(source, channel);
     }
 }

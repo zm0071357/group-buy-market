@@ -8,6 +8,6 @@ import group.buy.market.domain.trade.model.entity.TradePaySuccessEntity;
  */
 public interface TradeSettlementOrderService {
 
-    TradePaySettlementEntity settlementMarketPayOrder(TradePaySuccessEntity tradePaySuccessEntity);
+    TradePaySettlementEntity settlementMarketPayOrder(TradePaySuccessEntity tradePaySuccessEntity) throws Exception;
 
 }

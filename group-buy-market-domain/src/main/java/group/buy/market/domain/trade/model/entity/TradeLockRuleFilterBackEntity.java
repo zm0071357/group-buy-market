@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TradeRuleFilterBackEntity {
+public class TradeLockRuleFilterBackEntity {
 
     /**
      * 用户参与活动的订单量（次数）

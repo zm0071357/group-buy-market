@@ -60,4 +60,12 @@ public interface TradeRepository {
      * @param groupBuyTeamAggregate 拼团组队结算聚合对象
      */
     void settlementMarketPayOrder(GroupBuyTeamAggregate groupBuyTeamAggregate);
+
+    /**
+     * 查询 sc 渠道黑名单是否拦截
+     * @param source
+     * @param channel
+     * @return
+     */
+    boolean isSCBlackIntercept(String source, String channel);
 }

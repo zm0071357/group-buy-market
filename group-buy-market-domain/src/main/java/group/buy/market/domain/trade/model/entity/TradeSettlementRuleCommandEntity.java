@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * 交易支付订单实体
+ * 拼团交易结算规则命令
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TradePaySuccessEntity {
+public class TradeSettlementRuleCommandEntity {
 
     /**
      * 渠道
@@ -40,4 +40,5 @@ public class TradePaySuccessEntity {
      * 外部交易时间
      */
     private Date outTradeTime;
+
 }

@@ -1,26 +1,21 @@
-package group.buy.market.infrastructure.dao.po;
+package group.buy.market.domain.trade.model.entity;
 
+import group.buy.market.types.enums.GroupBuyOrderEnumVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * 拼团信息
+ *拼团交易结算规则反馈
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class GroupBuyOrder {
-
-    /**
-     * 自增ID
-     */
-    private Long id;
+public class TradeSettlementRuleFilterBackEntity {
 
     /**
      * 拼单组队ID
@@ -28,34 +23,9 @@ public class GroupBuyOrder {
     private String teamId;
 
     /**
-     * 活动ID
+     *  活动ID
      */
     private Long activityId;
-
-    /**
-     * 渠道
-     */
-    private String source;
-
-    /**
-     * 来源
-     */
-    private String channel;
-
-    /**
-     * 原始价格
-     */
-    private BigDecimal originalPrice;
-
-    /**
-     * 折扣金额
-     */
-    private BigDecimal deductionPrice;
-
-    /**
-     * 支付价格
-     */
-    private BigDecimal payPrice;
 
     /**
      * 目标数量
@@ -75,7 +45,7 @@ public class GroupBuyOrder {
     /**
      * 状态（0-拼单中、1-完成、2-失败）
      */
-    private Integer status;
+    private GroupBuyOrderEnumVO status;
 
     /**
      * 拼团开始时间 - 参与拼团时间
@@ -87,15 +57,4 @@ public class GroupBuyOrder {
      */
     private Date validEndTime;
 
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
-
 }
-

@@ -2,9 +2,9 @@ package group.buy.market.domain.trade.service.lock.filter;
 
 import group.buy.market.domain.trade.adapter.repository.TradeRepository;
 import group.buy.market.domain.trade.model.entity.GroupBuyActivityEntity;
-import group.buy.market.domain.trade.model.entity.TradeRuleCommandEntity;
-import group.buy.market.domain.trade.model.entity.TradeRuleFilterBackEntity;
-import group.buy.market.domain.trade.service.lock.factory.TradeRuleFilterFactory;
+import group.buy.market.domain.trade.model.entity.TradeLockRuleCommandEntity;
+import group.buy.market.domain.trade.model.entity.TradeLockRuleFilterBackEntity;
+import group.buy.market.domain.trade.service.lock.factory.TradeLockRuleFilterFactory;
 import group.buy.market.types.design.framework.link.model2.handler.LogicHandler;
 import group.buy.market.types.enums.ResponseCode;
 import group.buy.market.types.exception.AppException;
@@ -18,13 +18,13 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Service
-public class UserTakeLimitRuleFilter implements LogicHandler<TradeRuleCommandEntity, TradeRuleFilterFactory.DynamicContext, TradeRuleFilterBackEntity> {
+public class UserTakeLimitRuleFilter implements LogicHandler<TradeLockRuleCommandEntity, TradeLockRuleFilterFactory.DynamicContext, TradeLockRuleFilterBackEntity> {
 
     @Resource
     private TradeRepository tradeRepository;
 
     @Override
-    public TradeRuleFilterBackEntity apply(TradeRuleCommandEntity requestParameter, TradeRuleFilterFactory.DynamicContext dynamicContext) throws Exception {
+    public TradeLockRuleFilterBackEntity apply(TradeLockRuleCommandEntity requestParameter, TradeLockRuleFilterFactory.DynamicContext dynamicContext) throws Exception {
         log.info("交易规则过滤-用户参与次数校验{} activityId:{}", requestParameter.getUserId(), requestParameter.getActivityId());
         GroupBuyActivityEntity groupBuyActivityEntity = dynamicContext.getGroupBuyActivityEntity();
         Integer count = tradeRepository.queryOrderCount(requestParameter.getActivityId(), requestParameter.getUserId());
@@ -32,7 +32,7 @@ public class UserTakeLimitRuleFilter implements LogicHandler<TradeRuleCommandEnt
         if (groupBuyActivityEntity.getTakeLimitCount() <= count) {
             throw new AppException(ResponseCode.E0103.getCode(), ResponseCode.E0103.getInfo());
         }
-        return TradeRuleFilterBackEntity.builder()
+        return TradeLockRuleFilterBackEntity.builder()
                 .userTakeOrderCount(count)
                 .build();
     }
