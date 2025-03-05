@@ -1,5 +1,6 @@
 package group.buy.market.infrastructure.dao.po;
 
+import group.buy.market.infrastructure.dao.po.base.Page;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,13 +10,13 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * 用户拼单信息
+ * 用户参与拼团信息
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class GroupBuyOrderList {
+public class GroupBuyOrderList extends Page {
 
     /**
      * 自增ID

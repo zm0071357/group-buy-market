@@ -1,8 +1,12 @@
 package group.buy.market.domain.activity.adapter.repository;
 
+import group.buy.market.domain.activity.model.entity.UserGroupBuyOrderDetailEntity;
 import group.buy.market.domain.activity.model.valobj.GroupBuyActivityDiscountVO;
 import group.buy.market.domain.activity.model.valobj.SCSkuActivityVO;
 import group.buy.market.domain.activity.model.valobj.SkuVO;
+import group.buy.market.domain.activity.model.valobj.TeamStatisticVO;
+
+import java.util.List;
 
 /**
  * 活动仓储
@@ -53,4 +57,29 @@ public interface ActivityRepository {
      * @return
      */
     boolean isTagCrowdRange(String userId, String tagId);
+
+    /**
+     * 查询个人拼团数据
+     * @param activityId 活动ID
+     * @param userId 用户ID
+     * @param ownerCount 个人拼团数量
+     * @return
+     */
+    List<UserGroupBuyOrderDetailEntity> queryInProgressUserGroupBuyOrderDetailListByOwner(Long activityId, String userId, int ownerCount);
+
+    /**
+     * 查询其他拼团数据
+     * @param activityId 活动ID
+     * @param userId 用户ID
+     * @param randomCount 随机数量
+     * @return
+     */
+    List<UserGroupBuyOrderDetailEntity> queryInProgressUserGroupBuyOrderDetailListByRandom(Long activityId, String userId, int randomCount);
+
+    /**
+     * 统计拼团数据
+     * @param activityId
+     * @return
+     */
+    TeamStatisticVO queryTeamStatisticByActivityId(Long activityId);
 }

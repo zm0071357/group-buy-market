@@ -41,4 +41,25 @@ public interface GroupBuyOrderListDao {
      * @return
      */
     List<String> queryGroupBuyCompleteOrderOutTradeNoListByTeamId(String teamId);
+
+    /**
+     * 查询用户参与的拼团
+     * @param groupBuyOrderListReq
+     * @return
+     */
+    List<GroupBuyOrderList> queryInProgressUserGroupBuyOrderDetailListByUserId(GroupBuyOrderList groupBuyOrderListReq);
+
+    /**
+     * 查询用户未参与的拼团
+     * @param groupBuyOrderListReq
+     * @return
+     */
+    List<GroupBuyOrderList> queryInProgressUserGroupBuyOrderDetailListByRandom(GroupBuyOrderList groupBuyOrderListReq);
+
+    /**
+     * 查询活动下的所有拼团
+     * @param activityId 活动ID
+     * @return
+     */
+    List<GroupBuyOrderList> queryInProgressUserGroupBuyOrderDetailListByActivityId(Long activityId);
 }
