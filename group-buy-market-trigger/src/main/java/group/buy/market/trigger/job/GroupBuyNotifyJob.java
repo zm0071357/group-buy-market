@@ -18,7 +18,7 @@ public class GroupBuyNotifyJob {
     @Resource
     private TradeSettlementOrderService tradeSettlementOrderService;
 
-    @Scheduled(cron = "0/10 * * * * ?")
+    @Scheduled(cron = "* 0/30 * * * ?")
     public void exec() {
         try {
             Map<String, Integer> result = tradeSettlementOrderService.execSettlementNotifyJob();

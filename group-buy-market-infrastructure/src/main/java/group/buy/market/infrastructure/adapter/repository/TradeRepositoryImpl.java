@@ -63,6 +63,8 @@ public class TradeRepositoryImpl implements TradeRepository {
                 .teamId(groupBuyOrderList.getTeamId())
                 .orderId(groupBuyOrderList.getOrderId())
                 .deductionPrice(groupBuyOrderList.getDeductionPrice())
+                .originalPrice(groupBuyOrderList.getOriginalPrice())
+                .payPrice(groupBuyOrderList.getPayPrice())
                 .tradeOrderStatusEnumVO(TradeOrderStatusEnum.valueOf(groupBuyOrderList.getStatus()))
                 .build();
     }
@@ -126,7 +128,7 @@ public class TradeRepositoryImpl implements TradeRepository {
         }
 
         // 创建用户拼团明细
-        String orderId = RandomStringUtils.randomAlphabetic(12);
+        String orderId = RandomStringUtils.randomNumeric(12);
         GroupBuyOrderList groupBuyOrderListReq = GroupBuyOrderList.builder()
                 .userId(userEntity.getUserId())
                 .teamId(teamId)
@@ -139,6 +141,7 @@ public class TradeRepositoryImpl implements TradeRepository {
                 .channel(payDiscountEntity.getChannel())
                 .originalPrice(payDiscountEntity.getOriginalPrice())
                 .deductionPrice(payDiscountEntity.getDeductionPrice())
+                .payPrice(payDiscountEntity.getPayPrice())
                 .status(TradeOrderStatusEnum.CREATE.getCode())
                 .outTradeNo(payDiscountEntity.getOutTradeNo())
                 .bizId(payActivityEntity.getActivityId() + Constants.UNDERLINE + userEntity.getUserId() + Constants.UNDERLINE + (userTakeOrderCount + 1))
@@ -153,6 +156,8 @@ public class TradeRepositoryImpl implements TradeRepository {
         return MarketPayOrderEntity.builder()
                 .teamId(teamId)
                 .orderId(orderId)
+                .originalPrice(payDiscountEntity.getOriginalPrice())
+                .payPrice(payDiscountEntity.getPayPrice())
                 .deductionPrice(payDiscountEntity.getDeductionPrice())
                 .tradeOrderStatusEnumVO(TradeOrderStatusEnum.CREATE)
                 .build();

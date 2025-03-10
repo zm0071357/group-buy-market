@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 
 /**
- * 销支付锁单应答对象
+ * 营销支付锁单应答对象
  */
 @Data
 @Builder
@@ -22,9 +22,19 @@ public class LockMarketPayOrderResponseDTO {
     private String orderId;
 
     /**
+     * 原始金额
+     */
+    private BigDecimal originalPrice;
+
+    /**
      * 折扣金额
      */
     private BigDecimal deductionPrice;
+
+    /**
+     * 支付金额
+     */
+    private BigDecimal payPrice;
 
     /**
      * 交易订单状态
