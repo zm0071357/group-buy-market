@@ -103,9 +103,11 @@ public class MarketNode extends AbstractGroupBuyMarketSupport<MarketProductEntit
      */
     @Override
     public StrategyHandler<MarketProductEntity, DefaultActivityStrategyFactory.DynamicContext, TrialBalanceEntity> get(MarketProductEntity requestParameter, DefaultActivityStrategyFactory.DynamicContext dynamicContext) {
+        // 获取不到对应数据
         if (dynamicContext.getGroupBuyActivityDiscountVO() == null ||
                 dynamicContext.getSkuVO() == null ||
                 dynamicContext.getDeductPrice() == null) {
+            // 走向错误节点
             return errorNode;
         }
         return endNode;

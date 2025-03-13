@@ -55,10 +55,11 @@ public class TagRepositoryImpl implements TagRepository {
 
         try {
             crowdTagsDetailDao.addCrowdTagsUserId(crowdTagsDetailReq);
+
             RBitSet bitSet = redisService.getBitSet(tagId);
             bitSet.set(redisService.getIndexFromUserId(userId), true);
         } catch (DuplicateKeyException ignore) {
-
+            // 忽略唯一索引冲突
         }
 
     }

@@ -29,11 +29,12 @@ public class QueryGroupBuyActivityDiscountVOThreadTask implements Callable<Group
     @Override
     public GroupBuyActivityDiscountVO call() throws Exception {
 
+        // 先查商品活动配置
         SCSkuActivityVO scSkuActivityVO = activityRepository.querySCSkuActivityBySCGoodsId(source, channel, goodId);
         if (scSkuActivityVO == null) {
             return null;
         }
-
+        // 获取到活动ID，再查活动折扣配置
         return activityRepository.queryGroupBuyActivityDiscountVO(scSkuActivityVO.getActivityId());
     }
 }

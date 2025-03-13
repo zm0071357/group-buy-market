@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * 渠道商品活动配置值对象
+ * 商品活动配置值对象
  */
 @Getter
 @Builder
@@ -15,12 +15,12 @@ import lombok.NoArgsConstructor;
 public class SCSkuActivityVO {
 
     /**
-     * 渠道
+     * 来源
      */
     private String source;
 
     /**
-     * 来源
+     * 渠道
      */
     private String chanel;
 
@@ -33,6 +33,5 @@ public class SCSkuActivityVO {
      * 商品ID
      */
     private String goodsId;
-
 
 }

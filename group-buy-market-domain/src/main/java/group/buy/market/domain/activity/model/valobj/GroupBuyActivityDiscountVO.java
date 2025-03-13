@@ -7,16 +7,14 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+/**
+ * 活动折扣配置值对象
+ */
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class GroupBuyActivityDiscountVO {
-
-    /**
-     * 自增
-     */
-    private Long id;
 
     /**
      * 活动ID
