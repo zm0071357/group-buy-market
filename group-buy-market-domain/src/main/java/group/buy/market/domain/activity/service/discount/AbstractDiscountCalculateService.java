@@ -19,22 +19,33 @@ public abstract class AbstractDiscountCalculateService implements DiscountCalcul
      */
     @Override
     public BigDecimal calculate(String userId, BigDecimal originalPrice, GroupBuyActivityDiscountVO.GroupBuyDiscount groupBuyDiscount) {
-        // 判断折扣是否包含人群标签
+        // 折扣是否需要人群标签限定参加
         if (DiscountTypeEnum.TAG.equals(groupBuyDiscount.getDiscountType())) {
+            // 用户是否在标签范围内
             boolean isCrowRange = filterTagId(userId, groupBuyDiscount.getTagId());
+            // 不在 - 原价
             if (!isCrowRange) {
                 return originalPrice;
             }
         }
+        // 折扣计算
         return doCalculate(originalPrice, groupBuyDiscount);
     }
 
+    /**
+     * 判断用户是否在标签范围内
+     * @param userId
+     * @param tagId
+     * @return
+     */
     private boolean filterTagId(String userId, String tagId) {
+        // 未作实现，默认为True
         return true;
     }
 
     /**
-     * 计算折算后的价格
+     * 计算折算后价格
+     * 抽象方法 - 不同策略类都继承这个方法做实现
      * @param originalPrice
      * @param groupBuyDiscount
      * @return
