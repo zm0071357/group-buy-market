@@ -3,7 +3,7 @@ package group.buy.market.api.dto;
 import lombok.Data;
 
 /**
- * 营销支付锁单请求对象
+ * 用户锁单请求对象
  */
 @Data
 public class LockMarketPayOrderRequestDTO {
@@ -14,7 +14,7 @@ public class LockMarketPayOrderRequestDTO {
     private String userId;
 
     /**
-     * 拼单组队ID - 可为空，为空则创建新组队ID
+     * 拼单组队ID - 为空则创建新组队ID
      */
     private String teamId;
 

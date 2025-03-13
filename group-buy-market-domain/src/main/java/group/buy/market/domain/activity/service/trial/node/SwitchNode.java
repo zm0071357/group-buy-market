@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 
 /**
  * 开关节点
- * 控制流程的分支或选择，决定接下来应该执行哪一条路径
+ * 在程序运行过程中，直接动态变更某些属性配置。这些动态变更的配置包括降级和切量的开关，也包括一些功能程序的白名单用户测试
  */
 @Slf4j
 @Service
@@ -47,7 +47,7 @@ public class SwitchNode extends AbstractGroupBuyMarketSupport<MarketProductEntit
     }
 
     /**
-     * 获取下个节点
+     * 获取下个节点 - 营销试算节点
      * @param requestParameter 入参
      * @param dynamicContext 动态上下文
      * @return

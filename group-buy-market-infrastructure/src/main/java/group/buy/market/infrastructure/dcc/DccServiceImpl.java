@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class DccServiceImpl {
 
-    // 降级
+    // 降级开关 0关闭 1开启
     @DCCValue(value = "downgradeSwitch:0")
     private String downgradeSwitch;
 
@@ -30,7 +30,7 @@ public class DccServiceImpl {
      * @return
      */
     public boolean isCutRange(String userId) {
-        // 获取用户ID的哈希值
+        // 获取用户ID的哈希码绝对值
         int hashCode = Math.abs(userId.hashCode());
         // 取最后两位
         int lastTwoDigits = hashCode % 100;

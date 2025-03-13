@@ -28,7 +28,7 @@ public interface GroupBuyOrderDao {
     int updateSubtractLockCount(String teamId);
 
     /**
-     * 查询拼团信息
+     * 查询拼团进度
      * @param teamId 拼团ID
      * @return
      */

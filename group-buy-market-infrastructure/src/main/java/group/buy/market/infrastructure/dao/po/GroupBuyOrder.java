@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * 拼团信息
+ * 拼团活动总体信息
  */
 @Data
 @Builder

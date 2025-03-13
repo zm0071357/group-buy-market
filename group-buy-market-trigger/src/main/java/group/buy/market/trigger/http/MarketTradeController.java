@@ -50,6 +50,8 @@ public class MarketTradeController implements MarketTradeService {
             String outTradeNo = lockMarketPayOrderRequestDTO.getOutTradeNo();
             String teamId = lockMarketPayOrderRequestDTO.getTeamId();
             log.info("营销交易锁单:{} LockMarketPayOrderRequestDTO:{}", userId, JSON.toJSONString(lockMarketPayOrderRequestDTO));
+
+            // 参数校验
             if (StringUtils.isBlank(userId) || StringUtils.isBlank(source) || StringUtils.isBlank(channel) || StringUtils.isBlank(goodsId) || StringUtils.isBlank(goodsId) || null == activityId) {
                 return Response.<LockMarketPayOrderResponseDTO>builder()
                         .code(ResponseCode.ILLEGAL_PARAMETER.getCode())
@@ -57,8 +59,9 @@ public class MarketTradeController implements MarketTradeService {
                         .build();
             }
 
-            // 查询是否已经存在交易记录
+            // 是否存在未支付的锁单订单 - out_trade_no保障幂等
             MarketPayOrderEntity marketPayOrderEntity = tradeService.queryNoPayMarketPayOrderByOutTradeNo(userId, outTradeNo);
+            // 存在 - 直接返回该笔订单
             if (marketPayOrderEntity != null) {
                 LockMarketPayOrderResponseDTO lockMarketPayOrderResponseDTO = LockMarketPayOrderResponseDTO.builder()
                         .orderId(marketPayOrderEntity.getOrderId())
@@ -74,9 +77,10 @@ public class MarketTradeController implements MarketTradeService {
                         .build();
             }
 
-            // 判断拼团锁单是否完成了目标
+            // 判断是否达到拼团目标量
             if (teamId != null) {
-                    GroupBuyProgressVO groupBuyProgressVO = tradeService.queryGroupBuyProgress(teamId);
+                GroupBuyProgressVO groupBuyProgressVO = tradeService.queryGroupBuyProgress(teamId);
+                // 锁单量 = 目标量 - 目标完成
                 if (null != groupBuyProgressVO && Objects.equals(groupBuyProgressVO.getTargetCount(), groupBuyProgressVO.getLockCount())) {
                     log.info("交易锁单拦截-拼单目标已达成:{} {}", userId, teamId);
                     return Response.<LockMarketPayOrderResponseDTO>builder()
@@ -94,7 +98,7 @@ public class MarketTradeController implements MarketTradeService {
                     .goodsId(goodsId)
                     .activityId(activityId)
                     .build());
-
+            // 拼团活动折扣配置
             GroupBuyActivityDiscountVO groupBuyActivityDiscountVO = trialBalanceEntity.getGroupBuyActivityDiscountVO();
 
             // 锁单

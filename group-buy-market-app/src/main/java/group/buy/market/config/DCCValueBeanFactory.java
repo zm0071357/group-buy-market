@@ -21,6 +21,7 @@ import java.util.Map;
 
 /**
  * 动态配置中心
+ * BeanPostProcessor - 用于在 Spring 容器管理的 Bean 实例化后、初始化前，以及销毁前对 Bean 进行一些额外处理
  */
 @Slf4j
 @Configuration
@@ -88,12 +89,19 @@ public class DCCValueBeanFactory implements BeanPostProcessor {
         return topic;
     }
 
+    /**
+     * 扫描所有 Bean对象，检测哪个类的属性加有 @DCCValue 注解，检测到后进行管理操作
+     * @param bean
+     * @param beanName
+     * @return
+     * @throws BeansException
+     */
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         // 获取目标类和目标对象
         Class<?> targetBeanClass = bean.getClass();
         Object targetBeanObject = bean;
-        // 判断是否为 AOP 代理对象
+        // 判断是否为 AOP 代理对象 - 代理对象可能无法正确访问到原始类的字段
         if (AopUtils.isAopProxy(bean)) {
             // 获取代理对象的目标类和目标对象
             targetBeanClass = AopUtils.getTargetClass(bean);
@@ -148,4 +156,5 @@ public class DCCValueBeanFactory implements BeanPostProcessor {
         }
         return bean;
     }
+
 }

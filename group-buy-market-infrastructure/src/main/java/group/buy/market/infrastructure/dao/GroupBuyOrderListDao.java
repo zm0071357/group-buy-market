@@ -13,7 +13,7 @@ public interface GroupBuyOrderListDao {
     void insert(GroupBuyOrderList groupBuyOrderList);
 
     /**
-     * 查询用户拼单明细
+     * 查询未支付订单
      * @param groupBuyOrderReq 用户拼单明细
      * @return
      */

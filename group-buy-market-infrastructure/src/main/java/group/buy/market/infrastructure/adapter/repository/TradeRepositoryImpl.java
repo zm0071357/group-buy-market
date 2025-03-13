@@ -51,6 +51,7 @@ public class TradeRepositoryImpl implements TradeRepository {
 
     @Override
     public GroupBuyProgressVO queryGroupBuyProgress(String teamId) {
+        // 查询拼团信息 - 获取拼团进度：目标量、完成量、锁单量
         GroupBuyOrder groupBuyOrder = groupBuyOrderDao.queryGroupBuyProgress(teamId);
         if (groupBuyOrder == null) {
             return null;
@@ -69,8 +70,8 @@ public class TradeRepositoryImpl implements TradeRepository {
         PayDiscountEntity payDiscountEntity = groupBuyOrderAggregate.getPayDiscountEntity();
         UserEntity userEntity = groupBuyOrderAggregate.getUserEntity();
 
-        // 拼团不存在 新建一个团
         String teamId = payActivityEntity.getTeamId();
+        // 拼团不存在 - 新建一个团
         if (StringUtils.isBlank(teamId)) {
             teamId = RandomStringUtils.randomNumeric(8);
             // 构建拼团订单
@@ -86,17 +87,20 @@ public class TradeRepositoryImpl implements TradeRepository {
                     .completeCount(0)
                     .lockCount(1)
                     .build();
+            // 插入数据库
             groupBuyOrderDao.insert(groupBuyOrder);
         // 拼团存在
         } else {
-            // 更新锁单数
+            // 更新锁单量
             int updateAddLockCount = groupBuyOrderDao.updateAddLockCount(teamId);
+            // 更新失败 - 抛异常
             if (updateAddLockCount != 1) {
                 throw new AppException(ResponseCode.E0005.getCode(), ResponseCode.E0005.getInfo());
             }
         }
 
-        // 创建用户拼团明细
+        // 创建用户拼团信息
+        // 订单ID - 拼团系统
         String orderId = RandomStringUtils.randomAlphabetic(12);
         GroupBuyOrderList groupBuyOrderListReq = GroupBuyOrderList.builder()
                 .userId(userEntity.getUserId())
@@ -114,9 +118,10 @@ public class TradeRepositoryImpl implements TradeRepository {
                 .outTradeNo(payDiscountEntity.getOutTradeNo())
                 .build();
         try {
-            // 写入拼团记录
+            // 插入数据库
             groupBuyOrderListDao.insert(groupBuyOrderListReq);
         } catch (DuplicateKeyException e) {
+            // 唯一索引冲突
             throw new AppException(ResponseCode.INDEX_EXCEPTION);
         }
 
@@ -125,6 +130,5 @@ public class TradeRepositoryImpl implements TradeRepository {
                 .deductionPrice(payDiscountEntity.getDeductionPrice())
                 .tradeOrderStatusEnumVO(TradeOrderStatusEnum.CREATE)
                 .build();
-
     }
 }

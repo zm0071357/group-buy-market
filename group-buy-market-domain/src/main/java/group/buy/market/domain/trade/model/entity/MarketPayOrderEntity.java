@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 
 /**
- * 拼团预购订单营销实体对象
+ * 拼团信息实体对象
  */
 @Data
 @Builder
@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 public class MarketPayOrderEntity {
 
     /**
-     * 预购订单ID
+     * 订单ID
      */
     private String orderId;
 

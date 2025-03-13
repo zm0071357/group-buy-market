@@ -16,11 +16,6 @@ import java.util.Date;
 public class GroupBuyActivityDiscountVO {
 
     /**
-     * 自增
-     */
-    private Long id;
-
-    /**
      * 活动ID
      */
     private Long activityId;
@@ -95,10 +90,10 @@ public class GroupBuyActivityDiscountVO {
      */
     private String tagScope;
 
-    // 活动是否可见
-    // 配置为1 不可见
+    // 可见限制
+    // 配置为1 则为false - 不可见
+    // 无配置则为true - 可见
     public boolean isVisible() {
-        // 没有配置 可见
         if (StringUtils.isBlank(this.tagScope)) {
             return TagScopeEnum.VISIBLE.getAllow();
         }
@@ -109,8 +104,9 @@ public class GroupBuyActivityDiscountVO {
         return TagScopeEnum.VISIBLE.getAllow();
     }
 
-    // 活动是否可参与
-    // 配置为2 不可参与
+    // 参与限制
+    // 配置为2 则为false - 不可参与
+    // 无配置则为true - 可参与
     public boolean isEnable() {
         if (StringUtils.isBlank(this.tagScope)) {
             return TagScopeEnum.ENABLE.getAllow();
