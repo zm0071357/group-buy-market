@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
+/**
+ * 商品值对象
+ */
 @Getter
 @Builder
 @AllArgsConstructor

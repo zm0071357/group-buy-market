@@ -21,6 +21,11 @@ public class SwitchRoot<MarketProductEntity, DynamicContext, TrialBalanceEntity>
     }
 
     @Override
+    protected TrialBalanceEntity doApply(MarketProductEntity requestParameter, DynamicContext dynamicContext) throws Exception {
+        return null;
+    }
+
+    @Override
     public StrategyHandler<MarketProductEntity, DynamicContext, TrialBalanceEntity> get(MarketProductEntity requestParameter, DynamicContext dynamicContext) {
         return null;
     }

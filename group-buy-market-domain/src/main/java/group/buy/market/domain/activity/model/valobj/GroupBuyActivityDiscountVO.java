@@ -7,6 +7,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+/**
+ * 活动折扣配置值对象
+ * 商品有对应的活动，活动有对应的折扣配置
+ */
 @Getter
 @Builder
 @AllArgsConstructor
@@ -14,9 +18,9 @@ import java.util.Date;
 public class GroupBuyActivityDiscountVO {
 
     /**
-     * 自增
+     * 商品ID
      */
-    private Long id;
+    private String goodsId;
 
     /**
      * 活动ID
@@ -37,11 +41,6 @@ public class GroupBuyActivityDiscountVO {
      * 渠道
      */
     private String channel;
-
-    /**
-     * 商品ID
-     */
-    private String goodsId;
 
     /**
      * 折扣配置
@@ -93,6 +92,9 @@ public class GroupBuyActivityDiscountVO {
      */
     private String tagScope;
 
+    /**
+     * 折扣配置
+     */
     @Getter
     @Builder
     @AllArgsConstructor

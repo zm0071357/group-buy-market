@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 /**
@@ -34,12 +33,24 @@ public class DefaultActivityStrategyFactory {
         return rootNode;
     }
 
+    /**
+     * 定义上下文信息
+     * 用于节点间的传输使用
+     */
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class DynamicContext {
+
+        /**
+         * 活动折扣配置值对象
+         */
         private GroupBuyActivityDiscountVO groupBuyActivityDiscountVO;
+
+        /**
+         * 商品值对象
+         */
         private SkuVO skuVO;
     }
 

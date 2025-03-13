@@ -6,7 +6,7 @@ import group.buy.market.domain.activity.model.valobj.SkuVO;
 import java.util.concurrent.Callable;
 
 /**
- * 异步查询商品信息任务
+ * 查询商品信息任务
  */
 public class QuerySkuVOFromDBThreadTask implements Callable<SkuVO> {
 

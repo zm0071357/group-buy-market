@@ -11,15 +11,15 @@ public interface ActivityRepository {
 
     /**
      * 查询拼团活动及拼团配置
-     * @param source
-     * @param channel
+     * @param source 来源
+     * @param channel 渠道
      * @return
      */
     GroupBuyActivityDiscountVO queryGroupBuyActivityDiscountVO(String source, String channel);
 
     /**
      * 查询商品
-     * @param goodsId
+     * @param goodsId 商品ID
      * @return
      */
     SkuVO querySkuByGoodsId(String goodsId);

@@ -6,7 +6,7 @@ import group.buy.market.domain.activity.model.valobj.GroupBuyActivityDiscountVO;
 import java.util.concurrent.Callable;
 
 /**
- * 异步查询拼团活动任务
+ * 查询拼团活动任务
  */
 public class QueryGroupBuyActivityDiscountVOThreadTask implements Callable<GroupBuyActivityDiscountVO> {
 

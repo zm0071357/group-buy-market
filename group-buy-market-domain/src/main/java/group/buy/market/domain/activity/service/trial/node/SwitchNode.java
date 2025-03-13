@@ -34,7 +34,7 @@ public class SwitchNode extends AbstractGroupBuyMarketSupport<MarketProductEntit
     }
 
     /**
-     * 获取下个节点
+     * 获取下个节点 - 营销试算节点
      * @param requestParameter 入参
      * @param dynamicContext 动态上下文
      * @return

@@ -32,6 +32,7 @@ public class RootNode extends AbstractGroupBuyMarketSupport<MarketProductEntity,
      */
     @Override
     public TrialBalanceEntity doApply(MarketProductEntity requestParameter, DefaultActivityStrategyFactory.DynamicContext dynamicContext) throws Exception {
+        // 参数校验
         if (StringUtils.isBlank(requestParameter.getUserId()) ||
                 StringUtils.isBlank(requestParameter.getGoodsId()) ||
                 StringUtils.isBlank(requestParameter.getSource()) ||
@@ -42,7 +43,7 @@ public class RootNode extends AbstractGroupBuyMarketSupport<MarketProductEntity,
     }
 
     /**
-     * 获取下个节点
+     * 获取下个节点 - 开关节点
      * @param requestParameter 入参
      * @param dynamicContext 动态上下文
      * @return
