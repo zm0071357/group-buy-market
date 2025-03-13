@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * 对营销商品进行试算的结果
  * 由于每个用户标签不同，折扣价格、是否拼团等信息也不同
- * 需要根据用户Id进行试算后再将结果展示给用户
+ * 需要根据用户 ID进行试算后再将结果展示给用户
  */
 @Data
 @Builder
@@ -20,7 +20,7 @@ import java.util.Date;
 public class TrialBalanceEntity {
 
     /**
-     * 商品ID
+     * 商品 ID
      */
     private String goodsId;
 

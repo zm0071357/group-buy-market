@@ -12,11 +12,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 /**
- * 工厂
+ * 默认的拼团活动策略工厂
  */
 @Service
 public class DefaultActivityStrategyFactory {
 
+    // 根节点 - 第一个节点
     private final RootNode rootNode;
 
     public DefaultActivityStrategyFactory(RootNode rootNode) {
@@ -29,6 +30,10 @@ public class DefaultActivityStrategyFactory {
     }
 
 
+    /**
+     * 定义动态上下文
+     * 用于在节点间传输数据
+     */
     @Data
     @Builder
     @NoArgsConstructor
