@@ -17,20 +17,21 @@ public class TradeSettlementOrderServiceImpl implements TradeSettlementOrderServ
 
     @Override
     public TradePaySettlementEntity settlementMarketPayOrder(TradePaySuccessEntity tradePaySuccessEntity) {
-
         log.info("拼团交易-支付订单结算:{} outTradeNo:{}", tradePaySuccessEntity.getUserId(), tradePaySuccessEntity.getOutTradeNo());
+        // 查询未支付订单
         MarketPayOrderEntity marketPayOrderEntity = tradeRepository.queryNoPayMarketPayOrderByOutTradeNo(tradePaySuccessEntity.getUserId(), tradePaySuccessEntity.getOutTradeNo());
         if (marketPayOrderEntity == null) {
             return null;
         }
+        // 查询拼团组队信息
         GroupBuyTeamEntity groupBuyTeamEntity = tradeRepository.queryGroupBuyTeamByTeamId(marketPayOrderEntity.getTeamId());
-
+        // 封装
         GroupBuyTeamAggregate groupBuyTeamAggregate = GroupBuyTeamAggregate.builder()
                 .groupBuyTeamEntity(groupBuyTeamEntity)
                 .tradePaySuccessEntity(tradePaySuccessEntity)
                 .userEntity(UserEntity.builder().userId(tradePaySuccessEntity.getUserId()).build())
                 .build();
-
+        // 结算
         tradeRepository.settlementMarketPayOrder(groupBuyTeamAggregate);
 
         return TradePaySettlementEntity.builder()

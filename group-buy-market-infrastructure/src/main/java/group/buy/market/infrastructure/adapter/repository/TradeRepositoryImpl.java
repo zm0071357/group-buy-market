@@ -189,6 +189,7 @@ public class TradeRepositoryImpl implements TradeRepository {
     @Transactional(timeout = 500)
     @Override
     public void settlementMarketPayOrder(GroupBuyTeamAggregate groupBuyTeamAggregate) {
+        // 参数
         UserEntity userEntity = groupBuyTeamAggregate.getUserEntity();
         GroupBuyTeamEntity groupBuyTeamEntity = groupBuyTeamAggregate.getGroupBuyTeamEntity();
         TradePaySuccessEntity tradePaySuccessEntity = groupBuyTeamAggregate.getTradePaySuccessEntity();
@@ -219,6 +220,7 @@ public class TradeRepositoryImpl implements TradeRepository {
 
             List<String> outTradeNoList = groupBuyOrderListDao.queryGroupBuyCompleteOrderOutTradeNoListByTeamId(groupBuyTeamEntity.getTeamId());
 
+            // 创建回调任务 - 通知商城系统拼团完成
             NotifyTask notifyTask = new NotifyTask();
             notifyTask.setActivityId(groupBuyTeamEntity.getActivityId());
             notifyTask.setTeamId(groupBuyTeamEntity.getTeamId());
@@ -230,6 +232,7 @@ public class TradeRepositoryImpl implements TradeRepository {
                 put("outTradeNoList", outTradeNoList);
             }}));
 
+            // 写入数据库
             notifyTaskDao.insert(notifyTask);
         }
 
