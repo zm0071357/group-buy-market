@@ -4,7 +4,7 @@ import group.buy.market.domain.trade.adapter.repository.TradeRepository;
 import group.buy.market.domain.trade.model.entity.GroupBuyActivityEntity;
 import group.buy.market.domain.trade.model.entity.TradeRuleCommandEntity;
 import group.buy.market.domain.trade.model.entity.TradeRuleFilterBackEntity;
-import group.buy.market.domain.trade.service.lock.factory.TradeRuleFilterFactory;
+import group.buy.market.domain.trade.service.factory.TradeRuleFilterFactory;
 import group.buy.market.types.design.framework.link.model2.handler.LogicHandler;
 import group.buy.market.types.enums.ActivityStatusEnumVO;
 import group.buy.market.types.enums.ResponseCode;
@@ -30,11 +30,11 @@ public class ActivityUsabilityRuleFilter implements LogicHandler<TradeRuleComman
         log.info("交易规则过滤-活动可用性校验{} activityId:{}", requestParameter.getUserId(), requestParameter.getActivityId());
         // 查询活动信息
         GroupBuyActivityEntity groupBuyActivityEntity = tradeRepository.queryGroupBuyActivityByActivityId(requestParameter.getActivityId());
-        // 判断活动是否可用
+        // 活动是否可用
         if (!ActivityStatusEnumVO.EFFECTIVE.equals(groupBuyActivityEntity.getStatus())) {
             throw new AppException(ResponseCode.E0101.getCode(), ResponseCode.E0101.getInfo());
         }
-        // 判断是否在活动有效期内
+        // 活动是否在有效期内
         Date currentTime = new Date();
         if (currentTime.before(groupBuyActivityEntity.getStartTime()) || currentTime.after(groupBuyActivityEntity.getEndTime())) {
             throw new AppException(ResponseCode.E0102.getCode(), ResponseCode.E0102.getInfo());
