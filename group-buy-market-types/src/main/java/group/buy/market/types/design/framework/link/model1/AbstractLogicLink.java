@@ -1,7 +1,7 @@
 package group.buy.market.types.design.framework.link.model1;
 
 /**
- * 抽象类
+ * 抽象类 - 封装添加节点和执行 next 下一个节点的方法
  * @param <T>
  * @param <D>
  * @param <R>

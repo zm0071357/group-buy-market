@@ -1,5 +1,9 @@
 package group.buy.market.types.design.framework.link.model2.chain;
 
+/**
+ * 基础链表实现
+ * @param <E>
+ */
 public class LinkedList<E> implements Link<E> {
 
     /**

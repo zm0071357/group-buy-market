@@ -9,7 +9,7 @@ package group.buy.market.types.design.framework.link.model1;
 public interface LogicLink<T, D, R> extends LogicChainArmory<T, D, R> {
 
     /**
-     * 受理 处理业务逻辑
+     * 处理节点
      * @param requestParameter
      * @param dynamicContext
      * @return

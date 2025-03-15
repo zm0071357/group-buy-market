@@ -1,7 +1,7 @@
 package group.buy.market.types.design.framework.link.model1;
 
 /**
- * 责任链装配
+ * 定义责任链的装配方法，解耦链的构建逻辑
  * @param <T>
  * @param <D>
  * @param <R>
