@@ -35,6 +35,33 @@ mybatis:
   mapper-locations: classpath:/mybatis/mapper/*.xml
   config-location:  classpath:/mybatis/config/mybatis-config.xml
 
+# 动态线程池管理配置
+dynamic:
+  thread:
+    pool:
+      config:
+        redis:
+          # 状态；true = 开启、false 关闭
+          enabled: false
+          # redis host
+          host: 123.57.226.115
+          # redis port
+          port: 16379
+        zookeeper:
+          # 状态；true = 开启、false 关闭
+          enabled: true
+          # zookeeper
+          connect-string: 123.57.226.115:2181
+
+zookeeper:
+  sdk:
+    config:
+      connect-string: 123.57.226.115:2181
+      base-sleep-time-ms: 1000
+      max-retries: 3
+      session-timeout-ms: 18000
+      connection-timeout-ms: 30000
+
 # 日志
 logging:
   level:
