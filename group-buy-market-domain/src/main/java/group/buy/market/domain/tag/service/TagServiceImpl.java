@@ -31,6 +31,7 @@ public class TagServiceImpl implements TagService {
         }};
         // 将用户标签写入数据库
         for (String userId : userIdList) {
+            log.info("用户Id:{} 标签:{}", userId, tagId);
             tagRepository.addCrowdTagsUserId(tagId, userId);
         }
         // 更新人群标签统计量
