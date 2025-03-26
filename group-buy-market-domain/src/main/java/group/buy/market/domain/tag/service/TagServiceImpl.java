@@ -24,19 +24,16 @@ public class TagServiceImpl implements TagService {
 
         // 采集用户数据 - 这部分需要采集用户的消费类数据，后续有用户发起拼单后再处理。
 
-        // 数据写入记录
+        // 将用户数据写入集合
         List<String> userIdList = new ArrayList<String>() {{
             add("xiaofuge");
             add("LZM");
         }};
-
-        // 写入数据库
+        // 将用户标签写入数据库
         for (String userId : userIdList) {
             tagRepository.addCrowdTagsUserId(tagId, userId);
         }
-
         // 更新人群标签统计量
         tagRepository.updateCrowdTagsStatistics(tagId, userIdList.size());
-
     }
 }
