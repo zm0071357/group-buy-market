@@ -4,7 +4,7 @@ import group.buy.market.domain.trade.adapter.repository.TradeRepository;
 import group.buy.market.domain.trade.model.aggregate.GroupBuyOrderAggregate;
 import group.buy.market.domain.trade.model.entity.*;
 import group.buy.market.domain.trade.model.valobj.GroupBuyProgressVO;
-import group.buy.market.domain.trade.service.lock.factory.TradeRuleFilterFactory;
+import group.buy.market.domain.trade.service.factory.TradeRuleFilterFactory;
 import group.buy.market.types.design.framework.link.model2.chain.BusinessLinkedList;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

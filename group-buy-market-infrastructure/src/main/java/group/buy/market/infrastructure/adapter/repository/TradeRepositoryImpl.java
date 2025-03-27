@@ -217,12 +217,15 @@ public class TradeRepositoryImpl implements TradeRepository {
                 throw new AppException(ResponseCode.UPDATE_ZERO.getCode(), ResponseCode.UPDATE_ZERO.getInfo());
             }
 
+            // 查询拼团交易完成外部单号列表
             List<String> outTradeNoList = groupBuyOrderListDao.queryGroupBuyCompleteOrderOutTradeNoListByTeamId(groupBuyTeamEntity.getTeamId());
 
+            // 写入回调任务记录 - 拼团结束，回调商城系统通知拼团完成，进行后续发货处理
+            log.info("写入回调任务记录，外部单号:{}", JSON.toJSONString(outTradeNoList));
             NotifyTask notifyTask = new NotifyTask();
             notifyTask.setActivityId(groupBuyTeamEntity.getActivityId());
             notifyTask.setTeamId(groupBuyTeamEntity.getTeamId());
-            notifyTask.setNotifyUrl("");
+            notifyTask.setNotifyUrl("暂无");
             notifyTask.setNotifyCount(0);
             notifyTask.setNotifyStatus(0);
             notifyTask.setParameterJson(JSON.toJSONString(new HashMap<String, Object>(){{

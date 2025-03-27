@@ -4,7 +4,7 @@ import group.buy.market.domain.trade.adapter.repository.TradeRepository;
 import group.buy.market.domain.trade.model.entity.GroupBuyActivityEntity;
 import group.buy.market.domain.trade.model.entity.TradeRuleCommandEntity;
 import group.buy.market.domain.trade.model.entity.TradeRuleFilterBackEntity;
-import group.buy.market.domain.trade.service.lock.factory.TradeRuleFilterFactory;
+import group.buy.market.domain.trade.service.factory.TradeRuleFilterFactory;
 import group.buy.market.types.design.framework.link.model2.handler.LogicHandler;
 import group.buy.market.types.enums.ActivityStatusEnumVO;
 import group.buy.market.types.enums.ResponseCode;

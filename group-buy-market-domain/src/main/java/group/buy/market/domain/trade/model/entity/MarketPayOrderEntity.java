@@ -23,7 +23,7 @@ public class MarketPayOrderEntity {
     private String teamId;
 
     /**
-     * 预购订单ID
+     * 订单ID
      */
     private String orderId;
 
