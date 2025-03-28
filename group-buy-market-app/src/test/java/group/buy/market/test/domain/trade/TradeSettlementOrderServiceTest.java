@@ -1,10 +1,15 @@
 package group.buy.market.test.domain.trade;
 
 import com.alibaba.fastjson.JSON;
+import group.buy.market.api.MarketTradeService;
+import group.buy.market.api.dto.LockMarketPayOrderRequestDTO;
+import group.buy.market.api.dto.LockMarketPayOrderResponseDTO;
+import group.buy.market.api.response.Response;
 import group.buy.market.domain.trade.model.entity.TradePaySettlementEntity;
 import group.buy.market.domain.trade.model.entity.TradePaySuccessEntity;
 import group.buy.market.domain.trade.service.settlement.TradeSettlementOrderService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +25,23 @@ public class TradeSettlementOrderServiceTest {
 
     @Resource
     private TradeSettlementOrderService tradeSettlementOrderService;
+
+    @Resource
+    private MarketTradeService marketTradeService;
+
+    @Test
+    public void test_lockMarketPayOrder() {
+        LockMarketPayOrderRequestDTO lockMarketPayOrderRequestDTO = new LockMarketPayOrderRequestDTO();
+        lockMarketPayOrderRequestDTO.setUserId("xfg01");
+        lockMarketPayOrderRequestDTO.setTeamId(null);
+        lockMarketPayOrderRequestDTO.setActivityId(100123L);
+        lockMarketPayOrderRequestDTO.setGoodsId("9890001");
+        lockMarketPayOrderRequestDTO.setSource("s01");
+        lockMarketPayOrderRequestDTO.setChannel("c01");
+        lockMarketPayOrderRequestDTO.setOutTradeNo(RandomStringUtils.randomNumeric(12));
+        Response<LockMarketPayOrderResponseDTO> lockMarketPayOrderResponseDTOResponse = marketTradeService.lockMarketPayOrder(lockMarketPayOrderRequestDTO);
+        log.info("测试结果 req:{} res:{}", JSON.toJSONString(lockMarketPayOrderRequestDTO), JSON.toJSONString(lockMarketPayOrderResponseDTOResponse));
+    }
 
     @Test
     public void test_settlementMarketPayOrder() throws Exception {
