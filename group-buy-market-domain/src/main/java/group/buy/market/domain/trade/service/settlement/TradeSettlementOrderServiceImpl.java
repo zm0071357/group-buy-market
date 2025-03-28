@@ -111,15 +111,15 @@ public class TradeSettlementOrderServiceImpl implements TradeSettlementOrderServ
                 }
             // 执行失败
             } else if (response.equals(NotifyTaskHttpEnumVO.ERROR.getCode())) {
-                // 失败
+                // 回调次数小于5次 - 可以重新回调
                 if (notifyTaskEntity.getNotifyCount() < 5) {
-                    int updateCount = tradeRepository.updateNotifyTaskStatusError(notifyTaskEntity.getTeamId());
+                    int updateCount = tradeRepository.updateNotifyTaskStatusRetry(notifyTaskEntity.getTeamId());
                     if (updateCount == 1) {
                         errorCount ++;
                     }
-                // 失败五次后重试
+                // 失败大于5次 - 标记为失败
                 } else {
-                    int updateCount = tradeRepository.updateNotifyTaskStatusRetry(notifyTaskEntity.getTeamId());
+                    int updateCount = tradeRepository.updateNotifyTaskStatusError(notifyTaskEntity.getTeamId());
                     if (updateCount == 1) {
                         retryCount ++;
                     }

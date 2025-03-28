@@ -27,6 +27,7 @@ public class TradePortServiceImpl implements TradePortService {
 
     @Override
     public String groupBuyNotify(NotifyTaskEntity notifyTaskEntity) throws Exception {
+        // 防止重复通知 - 加锁
         RLock lock = redisService.getLock(notifyTaskEntity.lockKey());
         try {
             if (lock.tryLock(3, 0, TimeUnit.SECONDS)) {
@@ -37,6 +38,7 @@ public class TradePortServiceImpl implements TradePortService {
                     return groupBuyNotifyServiceImpl.groupBuyNotify(notifyTaskEntity.getNotifyUrl(), notifyTaskEntity.getParameterJson());
                 } finally {
                     if (lock.isLocked() && lock.isHeldByCurrentThread()) {
+                        // 解锁
                         lock.unlock();
                     }
                 }
