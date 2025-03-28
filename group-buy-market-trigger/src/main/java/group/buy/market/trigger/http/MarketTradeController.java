@@ -112,6 +112,7 @@ public class MarketTradeController implements MarketTradeService {
                             .activityId(activityId)
                             .activityName(groupBuyActivityDiscountVO.getActivityName())
                             .startTime(groupBuyActivityDiscountVO.getStartTime())
+                            .validTime(groupBuyActivityDiscountVO.getValidTime())
                             .endTime(groupBuyActivityDiscountVO.getEndTime())
                             .targetCount(groupBuyActivityDiscountVO.getTarget())
                             .build(),
