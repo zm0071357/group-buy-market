@@ -47,6 +47,8 @@ public class IndexGroupBuyMarketServiceImpl implements IndexGroupBuyMarketServic
 
         // 查询其他拼团数据
         if (randomCount != 0) {
+            // 如果个人没有拼团数据 - 查 3 条
+            randomCount = unionAllList.isEmpty() ? randomCount + 1 : randomCount;
             List<UserGroupBuyOrderDetailEntity> randomList = activityRepository.queryInProgressUserGroupBuyOrderDetailListByRandom(activityId, userId, randomCount);
             if (null != randomList && !randomList.isEmpty()){
                 unionAllList.addAll(randomList);
