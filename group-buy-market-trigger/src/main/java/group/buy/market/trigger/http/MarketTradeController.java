@@ -64,6 +64,8 @@ public class MarketTradeController implements MarketTradeService {
             if (marketPayOrderEntity != null) {
                 LockMarketPayOrderResponseDTO lockMarketPayOrderResponseDTO = LockMarketPayOrderResponseDTO.builder()
                         .orderId(marketPayOrderEntity.getOrderId())
+                        .originalPrice(marketPayOrderEntity.getOriginalPrice())
+                        .payPrice(marketPayOrderEntity.getPayPrice())
                         .deductionPrice(marketPayOrderEntity.getDeductionPrice())
                         .tradeOrderStatus(marketPayOrderEntity.getTradeOrderStatusEnumVO().getCode())
                         .build();
@@ -139,6 +141,8 @@ public class MarketTradeController implements MarketTradeService {
                     .info(ResponseCode.SUCCESS.getInfo())
                     .data(LockMarketPayOrderResponseDTO.builder()
                             .orderId(marketPayOrderEntity.getOrderId())
+                            .originalPrice(trialBalanceEntity.getOriginalPrice())
+                            .payPrice(trialBalanceEntity.getPayPrice())
                             .deductionPrice(marketPayOrderEntity.getDeductionPrice())
                             .tradeOrderStatus(marketPayOrderEntity.getTradeOrderStatusEnumVO().getCode())
                             .build())
