@@ -145,6 +145,8 @@ public class MarketTradeController implements MarketTradeService {
                     .info(ResponseCode.SUCCESS.getInfo())
                     .data(LockMarketPayOrderResponseDTO.builder()
                             .orderId(marketPayOrderEntity.getOrderId())
+                            .payPrice(trialBalanceEntity.getPayPrice())
+                            .originalPrice(trialBalanceEntity.getOriginalPrice())
                             .deductionPrice(marketPayOrderEntity.getDeductionPrice())
                             .tradeOrderStatus(marketPayOrderEntity.getTradeOrderStatusEnumVO().getCode())
                             .build())
@@ -167,7 +169,7 @@ public class MarketTradeController implements MarketTradeService {
 
     @PostMapping("/settlement_market_pay_order")
     @Override
-    public Response<SettlementMarketPayOrderResponseDTO> settlementMarketPayOrder(SettlementMarketPayOrderRequestDTO settlementMarketPayOrderRequestDTO) {
+    public Response<SettlementMarketPayOrderResponseDTO> settlementMarketPayOrder(@RequestBody SettlementMarketPayOrderRequestDTO settlementMarketPayOrderRequestDTO) {
         try {
             log.info("营销交易组队结算开始:{}, outTradeNo:{}", settlementMarketPayOrderRequestDTO.getUserId(), settlementMarketPayOrderRequestDTO.getOutTradeNo());
 
