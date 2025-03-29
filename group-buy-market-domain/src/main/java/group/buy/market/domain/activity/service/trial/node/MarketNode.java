@@ -32,9 +32,6 @@ public class MarketNode extends AbstractGroupBuyMarketSupport<MarketProductEntit
     private ThreadPoolExecutor threadPoolExecutor;
 
     @Resource
-    private EndNode endNode;
-
-    @Resource
     private ErrorNode errorNode;
 
     @Resource
