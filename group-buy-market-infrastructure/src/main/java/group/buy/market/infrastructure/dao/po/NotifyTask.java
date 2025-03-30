@@ -32,6 +32,16 @@ public class NotifyTask {
     private String teamId;
 
     /**
+     * 回调方式类型
+     */
+    private String notifyType;
+
+    /**
+     * MQ消息主题
+     */
+    private String notifyMq;
+
+    /**
      * 回调接口
      */
     private String notifyUrl;

@@ -1,5 +1,6 @@
 package group.buy.market.domain.trade.model.entity;
 
+import group.buy.market.domain.trade.model.valobj.NotifyConfigVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -57,9 +58,9 @@ public class PayDiscountEntity {
     private String outTradeNo;
 
     /**
-     * 回调地址
+     * 回调配置
      */
-    private String notifyUrl;
+    private NotifyConfigVO notifyConfigVO;
 
 }
 

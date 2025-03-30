@@ -10,13 +10,16 @@ import group.buy.market.types.design.framework.link.model2.chain.BusinessLinkedL
 import group.buy.market.types.design.framework.link.model2.handler.LogicHandler;
 import group.buy.market.types.enums.NotifyTaskHttpEnumVO;
 import group.buy.market.types.enums.ResponseCode;
+import group.buy.market.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ThreadPoolExecutor;
 
 @Slf4j
 @Service
@@ -27,6 +30,9 @@ public class TradeSettlementOrderServiceImpl implements TradeSettlementOrderServ
 
     @Resource
     private TradePortService tradePortService;
+
+    @Resource
+    private ThreadPoolExecutor threadPoolExecutor;
 
     @Resource
     private BusinessLinkedList<TradeSettlementRuleCommandEntity, TradeSettlementRuleFilterFactory.DynamicContext, TradeSettlementRuleFilterBackEntity> tradeSettlementRuleFilter;
@@ -57,7 +63,7 @@ public class TradeSettlementOrderServiceImpl implements TradeSettlementOrderServ
                 .status(tradeSettlementRuleFilterBackEntity.getStatus())
                 .validStartTime(tradeSettlementRuleFilterBackEntity.getValidStartTime())
                 .validEndTime(tradeSettlementRuleFilterBackEntity.getValidEndTime())
-                .notifyUrl(tradeSettlementRuleFilterBackEntity.getNotifyUrl())
+                .notifyConfigVO(tradeSettlementRuleFilterBackEntity.getNotifyConfigVO())
                 .build();
 
         // 构建聚合对象
@@ -68,11 +74,22 @@ public class TradeSettlementOrderServiceImpl implements TradeSettlementOrderServ
                 .build();
 
         // 拼团交易结算
-        tradeRepository.settlementMarketPayOrder(groupBuyTeamAggregate);
+        NotifyTaskEntity notifyTaskEntity = tradeRepository.settlementMarketPayOrder(groupBuyTeamAggregate);
 
         // 组队回调处理
-        Map<String, Integer> result = execSettlementNotifyJob(teamId);
-        log.info("回调通知拼团完成 result:{}", JSON.toJSONString(result));
+        // 5. 组队回调处理 - 处理失败也会有定时任务补偿，通过这样的方式，可以减轻任务调度，提高时效性
+        if (null != notifyTaskEntity) {
+            threadPoolExecutor.execute(() -> {
+                Map<String, Integer> notifyResultMap = null;
+                try {
+                    notifyResultMap = execSettlementNotifyJob(notifyTaskEntity);
+                    log.info("回调通知拼团完结 result:{}", JSON.toJSONString(notifyResultMap));
+                } catch (Exception e) {
+                    log.error("回调通知拼团完结失败 result:{}", JSON.toJSONString(notifyResultMap), e);
+                    throw new AppException(e.getMessage());
+                }
+            });
+        }
 
         // 返回结算信息
         return TradePaySettlementEntity.builder()
@@ -140,4 +157,48 @@ public class TradeSettlementOrderServiceImpl implements TradeSettlementOrderServ
         List<NotifyTaskEntity> notifyTaskEntityList = tradeRepository.queryUnExecutedNotifyTaskList(teamId);
         return getStringIntegerMap(notifyTaskEntityList);
     }
+
+    @Override
+    public Map<String, Integer> execSettlementNotifyJob(NotifyTaskEntity notifyTaskEntity) throws Exception {
+        log.info("拼团交易-执行结算通知回调，指定 teamId:{} notifyTaskEntity:{}", notifyTaskEntity.getTeamId(), JSON.toJSONString(notifyTaskEntity));
+        return execSettlementNotifyJob(Collections.singletonList(notifyTaskEntity));
+    }
+
+    private Map<String, Integer> execSettlementNotifyJob(List<NotifyTaskEntity> notifyTaskEntityList) throws Exception {
+        int successCount = 0, errorCount = 0, retryCount = 0;
+        for (NotifyTaskEntity notifyTask : notifyTaskEntityList) {
+            // 回调处理 success 成功，error 失败
+            String response = tradePortService.groupBuyNotify(notifyTask);
+
+            // 更新状态判断&变更数据库表回调任务状态
+            if (NotifyTaskHttpEnumVO.SUCCESS.getCode().equals(response)) {
+                int updateCount = tradeRepository.updateNotifyTaskStatusSuccess(notifyTask.getTeamId());
+                if (1 == updateCount) {
+                    successCount += 1;
+                }
+            } else if (NotifyTaskHttpEnumVO.ERROR.getCode().equals(response)) {
+                if (notifyTask.getNotifyCount() > 4) {
+                    int updateCount = tradeRepository.updateNotifyTaskStatusError(notifyTask.getTeamId());
+                    if (1 == updateCount) {
+                        errorCount += 1;
+                    }
+                } else {
+                    int updateCount = tradeRepository.updateNotifyTaskStatusRetry(notifyTask.getTeamId());
+                    if (1 == updateCount) {
+                        retryCount += 1;
+                    }
+                }
+            }
+        }
+
+        Map<String, Integer> resultMap = new HashMap<>();
+        resultMap.put("waitCount", notifyTaskEntityList.size());
+        resultMap.put("successCount", successCount);
+        resultMap.put("errorCount", errorCount);
+        resultMap.put("retryCount", retryCount);
+
+        return resultMap;
+    }
+
+
 }

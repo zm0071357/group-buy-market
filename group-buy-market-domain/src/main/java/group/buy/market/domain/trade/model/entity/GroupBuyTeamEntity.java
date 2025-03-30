@@ -1,5 +1,6 @@
 package group.buy.market.domain.trade.model.entity;
 
+import group.buy.market.domain.trade.model.valobj.NotifyConfigVO;
 import group.buy.market.types.enums.GroupBuyOrderEnumVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -58,8 +59,8 @@ public class GroupBuyTeamEntity {
     private Date validEndTime;
 
     /**
-     * 回调地址
+     * 回调配置
      */
-    private String notifyUrl;
+    private NotifyConfigVO notifyConfigVO;
 
 }

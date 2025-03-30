@@ -62,7 +62,7 @@ public interface TradeRepository {
      * 处理拼团结算
      * @param groupBuyTeamAggregate 拼团组队结算聚合对象
      */
-    void settlementMarketPayOrder(GroupBuyTeamAggregate groupBuyTeamAggregate);
+    NotifyTaskEntity settlementMarketPayOrder(GroupBuyTeamAggregate groupBuyTeamAggregate);
 
     /**
      * 查询 sc 渠道黑名单是否拦截

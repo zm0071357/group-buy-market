@@ -20,6 +20,16 @@ public class NotifyTaskEntity {
     private String teamId;
 
     /**
+     * 回调方式类型
+     */
+    private String notifyType;
+
+    /**
+     * MQ消息主题
+     */
+    private String NotifyMq;
+
+    /**
      * 回调接口
      */
     private String notifyUrl;

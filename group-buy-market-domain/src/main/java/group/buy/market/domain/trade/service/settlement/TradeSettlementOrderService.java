@@ -1,5 +1,6 @@
 package group.buy.market.domain.trade.service.settlement;
 
+import group.buy.market.domain.trade.model.entity.NotifyTaskEntity;
 import group.buy.market.domain.trade.model.entity.TradePaySettlementEntity;
 import group.buy.market.domain.trade.model.entity.TradePaySuccessEntity;
 
@@ -32,5 +33,13 @@ public interface TradeSettlementOrderService {
      * @throws Exception
      */
     Map<String, Integer> execSettlementNotifyJob(String teamId) throws Exception;
+
+    /**
+     * 回调任务
+     * @param notifyTaskEntity
+     * @return
+     * @throws Exception
+     */
+    Map<String, Integer> execSettlementNotifyJob(NotifyTaskEntity notifyTaskEntity) throws Exception;
 
 }

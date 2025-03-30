@@ -88,6 +88,11 @@ public class GroupBuyOrder {
     private Date validEndTime;
 
     /**
+     * 回调方式
+     */
+    private String notifyType;
+
+    /**
      * 回调地址
      */
     private String notifyUrl;

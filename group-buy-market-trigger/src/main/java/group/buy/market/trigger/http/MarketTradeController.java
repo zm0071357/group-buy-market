@@ -13,6 +13,8 @@ import group.buy.market.domain.activity.model.valobj.GroupBuyActivityDiscountVO;
 import group.buy.market.domain.activity.service.IndexGroupBuyMarketService;
 import group.buy.market.domain.trade.model.entity.*;
 import group.buy.market.domain.trade.model.valobj.GroupBuyProgressVO;
+import group.buy.market.domain.trade.model.valobj.NotifyConfigVO;
+import group.buy.market.domain.trade.model.valobj.NotifyTypeEnumVO;
 import group.buy.market.domain.trade.service.lock.TradeLockOrderService;
 import group.buy.market.domain.trade.service.settlement.TradeSettlementOrderService;
 import group.buy.market.types.enums.ResponseCode;
@@ -52,11 +54,11 @@ public class MarketTradeController implements MarketTradeService {
             Long activityId = lockMarketPayOrderRequestDTO.getActivityId();
             String outTradeNo = lockMarketPayOrderRequestDTO.getOutTradeNo();
             String teamId = lockMarketPayOrderRequestDTO.getTeamId();
-            String notifyUrl = lockMarketPayOrderRequestDTO.getNotifyUrl();
+            LockMarketPayOrderRequestDTO.NotifyConfigVO notifyConfigVO = lockMarketPayOrderRequestDTO.getNotifyConfigVO();
 
             log.info("营销交易锁单:{} LockMarketPayOrderRequestDTO:{}", userId, JSON.toJSONString(lockMarketPayOrderRequestDTO));
             if (StringUtils.isBlank(userId) || StringUtils.isBlank(source) || StringUtils.isBlank(channel) || StringUtils.isBlank(goodsId) ||
-                    StringUtils.isBlank(goodsId) || activityId ==null || notifyUrl == null) {
+                    StringUtils.isBlank(goodsId) || activityId ==null || notifyConfigVO == null) {
                 return Response.<LockMarketPayOrderResponseDTO>builder()
                         .code(ResponseCode.ILLEGAL_PARAMETER.getCode())
                         .info(ResponseCode.ILLEGAL_PARAMETER.getInfo())
@@ -134,7 +136,11 @@ public class MarketTradeController implements MarketTradeService {
                             .deductionPrice(trialBalanceEntity.getDeductionPrice())
                             .payPrice(trialBalanceEntity.getPayPrice())
                             .outTradeNo(outTradeNo)
-                            .notifyUrl(notifyUrl)
+                            .notifyConfigVO(NotifyConfigVO.builder()
+                                    .notifyType(NotifyTypeEnumVO.valueOf(notifyConfigVO.getNotifyType()))
+                                    .notifyMQ(notifyConfigVO.getNotifyMQ())
+                                    .notifyUrl(notifyConfigVO.getNotifyUrl())
+                                    .build())
                             .build());
 
             log.info("交易锁单记录(新):{} marketPayOrderEntity:{}", userId, JSON.toJSONString(marketPayOrderEntity));
